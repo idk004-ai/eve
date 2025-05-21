@@ -202,8 +202,8 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate, onClose
     const goToPreviousMonth = () => {
         const newCurrentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
         const newCurrentYear = currentMonth === 0 ? currentYear - 1 : currentYear;
-        const newNextMonth = nextMonth === 0 ? 11 : nextMonth - 1;
-        const newNextMonthYear = nextMonth === 0 ? nextMonthYear - 1 : nextMonthYear;
+        const newNextMonth = (newCurrentMonth + 1) % 12;
+        const newNextMonthYear = newCurrentMonth === 11 ? newCurrentYear + 1 : newCurrentYear;
 
         setCurrentMonth(newCurrentMonth);
         setCurrentYear(newCurrentYear);
