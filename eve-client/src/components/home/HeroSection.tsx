@@ -124,7 +124,7 @@ const HeroSection: React.FC = () => {
                     calendarRef={returnCalendarRef}
                     returnCalendarRef={returnCalendarRef}
                     selectedDate={selectedDate}
-                    selectedReturnDate={selectedReturnDate || new Date(selectedDate.getTime() + 86400000)}
+                    selectedReturnDate={selectedReturnDate || defaultReturnDate}
                     handleDateSelect={handleDateSelect}
                     handleReturnDateSelect={handleReturnDateSelect}
                     closeCalendar={closeCalendar}
