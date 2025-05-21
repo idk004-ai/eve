@@ -39,7 +39,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
     return (
         <div className="flex flex-wrap gap-2 items-center p-4">
             {/* From field */}
-            <div className="flex-1 min-w-[200px] bg-gray-100 rounded-lg p-4 flex items-center">
+            <div className="flex-1 min-w-[200px] h-[72px] bg-gray-100 rounded-lg p-4 flex items-center">
                 <div className="text-blue-500 mr-3">
                     <MdLocationOn className="h-6 w-6" />
                 </div>
@@ -63,7 +63,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
             </div>
 
             {/* To field */}
-            <div className="flex-1 min-w-[200px] bg-gray-100 rounded-lg p-4 flex items-center">
+            <div className="flex-1 min-w-[200px] h-[72px] bg-gray-100 rounded-lg p-4 flex items-center">
                 <div className="text-red-500 mr-3">
                     <MdLocationOn className="h-6 w-6" />
                 </div>
@@ -74,7 +74,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
             </div>
 
             {/* Date field */}
-            <div className="flex-1 min-w-[200px] bg-gray-100 rounded-lg p-4 flex items-center relative">
+            <div className="flex-1 min-w-[200px] h-[72px] bg-gray-100 rounded-lg p-4 flex items-center relative">
                 <div className="text-blue-500 mr-3">
                     <MdCalendarToday className="h-5 w-5" />
                 </div>
@@ -103,7 +103,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
             
             {/* Return date field - shown if selectedReturnDate exists */}
             {selectedReturnDate ? (
-                <div className="flex-1 min-w-[200px] bg-gray-100 rounded-lg p-4 flex items-center relative">
+                <div className="flex-1 min-w-[200px] h-[72px] bg-gray-100 rounded-lg p-4 flex items-center relative">
                     <div className="text-green-500 mr-3">
                         <MdCalendarToday className="h-5 w-5" />
                     </div>
@@ -130,7 +130,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
                     </div>
                 </div>
             ) : (
-                <div className="flex items-center mr-auto ml-4">
+                <div className="flex items-center h-[72px] mr-auto ml-4">
                     <button
                         className="text-blue-600 flex items-center text-sm"
                         onClick={() => {
@@ -146,7 +146,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
             )}
 
             {/* Search button */}
-            <div>
+            <div className="flex items-center h-[72px]">
                 <motion.button
                     className="bg-yellow-500 hover:bg-yellow-600 w-full text-white font-bold py-3 px-10 rounded-lg"
                     whileHover={{ scale: 1.03 }}

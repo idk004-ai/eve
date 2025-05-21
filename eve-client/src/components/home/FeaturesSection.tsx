@@ -33,7 +33,6 @@ const FeaturesSection: React.FC = () => {
           {features.map((feature, index) => (
             <motion.div 
               key={index}
-              whileHover={{ y: -5 }}
               className="flex items-center bg-white p-4 rounded-lg shadow-sm"
             >
               <div className="bg-blue-100 p-3 rounded-full mr-4">

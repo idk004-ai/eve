@@ -43,11 +43,10 @@ const CalendarDisplay: React.FC<CalendarDisplayProps> = ({
   
   // If we're showing the return calendar, set minimum date to the departure date
   const minDate = type === 'return' ? selectedDate : undefined;
-
   return (
     <div 
       ref={ref} 
-      className="absolute left-0 right-0 top-3/4 z-50"
+      className="absolute left-0 right-0 top-full z-50 mt-1"
       style={{ pointerEvents: isVisible ? "auto" : "none" }}
     >
       <div 

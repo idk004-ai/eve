@@ -5,7 +5,6 @@ import BackgroundAnimation from './hero/BackgroundAnimation';
 import FlashSaleBanner from './hero/FlashSaleBanner';
 import TransportTabs from './hero/TransportTabs';
 import SearchForm from './hero/SearchForm';
-import PromotionDates from './hero/PromotionDates';
 import CalendarDisplay from './hero/CalendarDisplay';
 import useDateUtils from './hero/hooks/useDateUtils';
 import useOutsideClick from './hero/hooks/useOutsideClick';
@@ -106,9 +105,6 @@ const HeroSection: React.FC = () => {
                         closeReturnCalendar={closeReturnCalendar}
                     />
                 </div>
-
-                {/* Promotion dates */}
-                <PromotionDates />
                 
                 {/* Departure Calendar component */}
                 <CalendarDisplay
