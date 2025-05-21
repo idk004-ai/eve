@@ -23,7 +23,8 @@ const HeroSection: React.FC = () => {
     const [isReturnCalendarVisible, setIsReturnCalendarVisible] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectedReturnDate, setSelectedReturnDate] = useState<Date | null>(null);
-    
+    const defaultReturnDate = new Date(selectedDate.getTime() + 86400000);
+
     // Refs for calendar elements
     const calendarRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
     const returnCalendarRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
