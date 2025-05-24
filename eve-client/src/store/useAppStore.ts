@@ -16,7 +16,7 @@ interface AppState {
   isLoading: boolean;
   // Current active tab in the search form
   activeTransportTab: 'bus' | 'plane' | 'train' | 'car';
-  
+
   // Actions
   setSearchForm: (data: Partial<SearchFormState>) => void;
   setLanguage: (lang: 'vi' | 'en') => void;
@@ -27,27 +27,27 @@ interface AppState {
 const useAppStore = create<AppState>((set) => ({
   // Initial state
   searchForm: {
-    from: 'Hà Nội',
-    to: 'Hải Phòng',
-    date: '21/05/2025',
+    from: 'Sài Gòn',
+    to: 'Nha Trang',
+    date: '22/05/2025',
   },
   language: 'vi',
   isLoading: false,
   activeTransportTab: 'bus',
-  
+
   // Actions
-  setSearchForm: (data) => 
-    set((state) => ({ 
-      searchForm: { ...state.searchForm, ...data } 
+  setSearchForm: (data) =>
+    set((state) => ({
+      searchForm: { ...state.searchForm, ...data }
     })),
-  
-  setLanguage: (lang) => 
+
+  setLanguage: (lang) =>
     set({ language: lang }),
-  
-  setLoading: (loading) => 
+
+  setLoading: (loading) =>
     set({ isLoading: loading }),
-  
-  setActiveTransportTab: (tab) => 
+
+  setActiveTransportTab: (tab) =>
     set({ activeTransportTab: tab }),
 }));
 

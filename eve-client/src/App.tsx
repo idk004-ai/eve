@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
-import HomePage from './pages/HomePage'
+import { HomePage, TripSearchResultsPage } from './pages'
 
 const router = createBrowserRouter([
   {
@@ -11,6 +11,10 @@ const router = createBrowserRouter([
       </MainLayout>
     )
   },
+  {
+    path: '/search-results',
+    element: <TripSearchResultsPage />
+  }
   // Add more routes here in the future
 ])
 
