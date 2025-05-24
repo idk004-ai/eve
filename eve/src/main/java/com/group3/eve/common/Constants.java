@@ -1,0 +1,33 @@
+package com.group3.eve.common;
+
+/**
+ * Constants class containing message codes used throughout the application.
+ * Each constant represents a unique message code that can be resolved using
+ * the message source.
+ */
+public class Constants {
+    // Error message codes
+    public static final String ME001 = "ME001"; // Entity not found
+    public static final String ME002 = "ME002"; // Entity validation error with reason
+    public static final String ME003 = "ME003"; // Unable to determine entity class type
+    public static final String DI001 = "DI001"; // Data inconsistency error
+    public static final String DI0011 = "DI0011"; // Data integrity violation error
+    public static final String DI002 = "DI002"; // Error checking uniqueness for field
+    // Validation message codes
+    public static final String VAL001 = "VAL001"; // Required field
+    public static final String VAL002 = "VAL002"; // Invalid format
+    public static final String VAL003 = "VAL003"; // Field length exceeded
+    public static final String VAL004 = "VAL004"; // Invalid value range
+    public static final String VAL005 = "VAL005"; // Validation failed
+
+    // Success message codes
+    public static final String SUC001 = "SUC001"; // Operation completed successfully
+    public static final String SUC002 = "SUC002"; // Entity created successfully
+    public static final String SUC003 = "SUC003"; // Entity updated successfully
+    public static final String SUC004 = "SUC004"; // Entity deleted successfully
+
+    // Info message codes
+    public static final String INF001 = "INF001"; // General information message
+    public static final String INF002 = "INF002"; // Process started
+    public static final String INF003 = "INF003"; // Process completed
+}
