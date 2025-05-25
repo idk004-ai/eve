@@ -1,4 +1,8 @@
 package com.group3.eve.service;
 
-public class AbstractConstraintValidationService {
+/**
+ * This is an abstract base class for constraint validation services.
+ * Extend this class to implement specific validation logic.
+ */
+public abstract class AbstractConstraintValidationService {
 }

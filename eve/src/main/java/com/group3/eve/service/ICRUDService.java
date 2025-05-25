@@ -20,9 +20,9 @@ public interface ICRUDService<T, ID, DTO> {
     List<DTO> findAll(int page, int size);
 
     /**
-     * Retrieves all entities without pagination.
+     * Retrieves an entity without pagination.
      *
-     * @return a list of DTOs representing the entities
+     * @return a DTO representing the entity
      */
     DTO findByIdDTO(ID id);
 

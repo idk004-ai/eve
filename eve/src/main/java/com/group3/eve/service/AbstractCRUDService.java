@@ -92,6 +92,7 @@ public abstract class AbstractCRUDService<T, ID, DTO>
             currentEntity.set(entity);
             return getRepository().save(entity);
         } finally {
+            currentEntity.remove();
             currentDto.remove();
         }
     }
