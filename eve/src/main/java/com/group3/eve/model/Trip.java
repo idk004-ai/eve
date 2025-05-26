@@ -1,6 +1,7 @@
 package com.group3.eve.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -40,9 +41,8 @@ public class Trip {
     @Column(name = "MinPassengers")
     private Integer minPassengers;
 
-    @ColumnDefault("'scheduled'")
-    @Lob
-    @Column(name = "Status")
+    @Size(max = 20)
+    @Column(name = "Status", length = 20)
     private String status;
 
     @Lob

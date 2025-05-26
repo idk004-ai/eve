@@ -55,8 +55,8 @@ public class Ticket {
     private String ticketCode;
 
     @ColumnDefault("'active'")
-    @Lob
-    @Column(name = "Status")
+    @Size(max = 50)
+    @Column(name = "Status", length = 50)
     private String status;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
