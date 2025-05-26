@@ -7,6 +7,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -21,6 +23,23 @@ public class GlobalExceptionHandler {
 
     public GlobalExceptionHandler(MessageSource messageSource) {
         this.messageSource = messageSource;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public CustomResponse<Map<String, String>> handleValidationRequest(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorReason = error.getDefaultMessage();
+            String errorMessage = messageSource.getMessage(Constants.ME004, new Object[]{ fieldName, errorReason }, Locale.getDefault());
+            errors.put(fieldName, errorMessage);
+        });
+        return new CustomResponse<>(
+                false,
+                "null",
+                null,
+                errors);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

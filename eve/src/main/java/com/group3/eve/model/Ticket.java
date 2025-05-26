@@ -47,8 +47,8 @@ public class Ticket {
     @Column(name = "PassengerPhone", length = 50)
     private String passengerPhone;
 
-    @Column(name = "Price", precision = 10, scale = 2)
-    private BigDecimal price;
+//    @Column(name = "Price", precision = 10, scale = 2)
+//    private BigDecimal price;
 
     @Size(max = 100)
     @Column(name = "TicketCode", length = 100)
