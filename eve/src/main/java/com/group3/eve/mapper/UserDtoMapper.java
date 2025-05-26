@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 
 @Component
-public class UserDtoMapper {
+public class UserDtoMapper implements EntityMapper<User, UserDTO> {
 
     public UserDTO mapToDTO(User user) {
         if (user == null) {
