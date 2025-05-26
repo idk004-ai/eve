@@ -48,4 +48,12 @@ public interface ICRUDService<T, ID, DTO> {
      * @param id the identifier of the entity to delete
      */
     void deleteById(ID id);
+
+    /**
+     * Checks if an entity is active.
+     *
+     * @param entity the entity to check
+     * @return true if the entity is active, false otherwise
+     */
+    long countAll();
 }

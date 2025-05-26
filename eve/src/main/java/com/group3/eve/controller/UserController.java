@@ -36,7 +36,8 @@ public class UserController {
     ) {
         // Simulate a paginated response
         List<UserDTO> users = userService.findAll(pageNo, pageSize);
-        Page<UserDTO> userPage = new PageImpl<>(users, PageRequest.of(pageNo, pageSize), users.size());
+        long totalElements = userService.countAll();
+        Page<UserDTO> userPage = new PageImpl<>(users, PageRequest.of(pageNo, pageSize), totalElements);
         return new CustomResponse<>(
                 true,
                 messageSource.getMessage(Constants.SUC001, null, Locale.getDefault()),

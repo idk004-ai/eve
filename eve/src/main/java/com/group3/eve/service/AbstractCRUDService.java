@@ -40,6 +40,11 @@ public abstract class AbstractCRUDService<T, ID, DTO>
         return currentDto.get();
     }
 
+    @Override
+    public long countAll() {
+        return getRepository().count();
+    }
+
     /**
      * Gets the name of the entity class that this service manages.
      * Uses generic type resolution to dynamically determine the entity class name.
