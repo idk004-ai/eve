@@ -47,7 +47,11 @@ public class UserDtoMapper {
         user.setGender(userDTO.getGender());
         user.setIsActive(userDTO.getIsActive());
         user.setRole(userDTO.getRole());
-        user.setCreatedAt(Instant.now()); // Simply use current time
+        if (userDTO.getId() == null) {
+            user.setCreatedAt(Instant.now());
+        } else {
+            user.setCreatedAt(userDTO.getCreatedAt());
+        }
         user.setModifiedAt(Instant.now());
 
         return user;

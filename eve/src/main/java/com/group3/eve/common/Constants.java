@@ -10,7 +10,7 @@ public class Constants {
     public static final String ME001 = "ME001"; // Entity not found
     public static final String ME002 = "ME002"; // Entity validation error with reason
     public static final String ME003 = "ME003"; // Unable to determine entity class type
-    public static final String ME004 = "ME004"; // Invalid request format with reason
+    public static final String ME0041 = "ME004.1"; // Invalid request format with reason
 
     public static final String DI001 = "DI001"; // Data inconsistency error
     public static final String DI0011 = "DI0011"; // Data integrity violation error
@@ -37,6 +37,6 @@ public class Constants {
     public static final String PASSWORD_ERROR = "Password must contain at least one digit, one lowercase, one uppercase, and one special character";
     public static final String PHONE_REGEX = "^[0-9]{10,15}$";
     public static final String PHONE_ERROR = "Phone number must be between 10 and 15 digits";
-    public static final String ROLE_REGEX = "^(customer|bus_operator|admin)$"; // Example regex for roles
-    public static final String ROLE_ERROR = "Role must be one of the following: CUSTOMER, BUS_OPERATOR, ADMIN";
+    public static final String ROLE_REGEX = "^(customer|bus_operator|admin)$";
+    public static final String ROLE_ERROR = "Role must be one of the following: customer, bus_operator, admin";
 }
