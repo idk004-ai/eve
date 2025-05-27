@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaExchangeAlt, FaPlus } from 'react-icons/fa';
 import { MdLocationOn, MdCalendarToday } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchFormProps {
     searchForm: {
@@ -29,13 +30,13 @@ const SearchForm: React.FC<SearchFormProps> = ({
     selectedReturnDate,
     formatDate,
     getDayOfWeek,
-    setIsCalendarVisible,
-    setIsReturnCalendarVisible,
+    setIsCalendarVisible, setIsReturnCalendarVisible,
     isCalendarVisible,
     isReturnCalendarVisible,
     closeCalendar,
     closeReturnCalendar
 }) => {
+    const navigate = useNavigate();
     return (
         <div className="flex flex-wrap gap-2 items-center p-4">
             {/* From field */}
@@ -99,8 +100,8 @@ const SearchForm: React.FC<SearchFormProps> = ({
                         {getDayOfWeek(selectedDate)}, {formatDate(selectedDate)}
                     </div>
                 </div>
-            </div>      
-            
+            </div>
+
             {/* Return date field - shown if selectedReturnDate exists */}
             {selectedReturnDate ? (
                 <div className="flex-1 min-w-[200px] h-[72px] bg-gray-100 rounded-lg p-4 flex items-center relative">
@@ -143,14 +144,25 @@ const SearchForm: React.FC<SearchFormProps> = ({
                         Thêm ngày về
                     </button>
                 </div>
-            )}
-
+            )}            
+            
             {/* Search button */}
             <div className="flex items-center h-[72px]">
                 <motion.button
                     className="bg-yellow-500 hover:bg-yellow-600 w-full text-white font-bold py-3 px-10 rounded-lg"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
+                    onClick={() => {
+                        // Chuyển đến trang tìm kiếm phù hợp dựa trên điểm xuất phát và đến
+                        if (searchForm.from === 'Sài Gòn' && searchForm.to === 'Nha Trang') {
+                            navigate('/search-results');
+                        } else if (searchForm.from === 'Hà Nội' && searchForm.to === 'Hải Phòng') {
+                            navigate('/ha-noi-hai-phong');
+                        } else {
+                            // Trường hợp mặc định
+                            navigate('/search-results');
+                        }
+                    }}
                 >
                     Tìm kiếm
                 </motion.button>

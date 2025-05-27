@@ -46,11 +46,11 @@ const CalendarDisplay: React.FC<CalendarDisplayProps> = ({
   return (
     <div 
       ref={ref} 
-      className="absolute left-0 right-0 top-full z-50 mt-1"
+      className="absolute left-0 right-0 top-full z-50 mt-1 max-w-2xl mx-auto"
       style={{ pointerEvents: isVisible ? "auto" : "none" }}
     >
       <div 
-        className="bg-white shadow-2xl rounded-lg overflow-hidden w-[90%] max-w-4xl mx-auto"
+        className="bg-white shadow-2xl rounded-lg overflow-hidden w-full max-w-4xl mx-auto"
         onClick={(e) => e.stopPropagation()} 
       >
         <Calendar
