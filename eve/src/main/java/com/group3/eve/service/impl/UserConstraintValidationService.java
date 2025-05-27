@@ -36,17 +36,12 @@ public class UserConstraintValidationService extends AbstractConstraintValidatio
                     if (dateOfBirth == null)
                         return false;
 
-                    LocalDate now = LocalDate.now();
-                    int age = Period.between(dateOfBirth, now).getYears();
-                    return age >= 18;
+                    return Period.between(dob, LocalDate.now()).getYears() >= 18;
                 },
                 args -> {
-                    LocalDate dateOfBirth = (LocalDate) args[0];
-                    LocalDate now = LocalDate.now();
-                    int age = Period.between(dateOfBirth, now).getYears();
                     return messageSource.getMessage(
                             Constants.ME0072,
-                            new Object[] { age, 18 },
+                            new Object[] { 18 },
                             Locale.getDefault());
                 });
     }

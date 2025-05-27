@@ -87,7 +87,7 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
     protected void validateEntity(UserDTO userDTO, Map<String, String> errors) {
         // validate unique constraints
         userUniqueValidationService.validateGeneralContracts(userDTO, userDTO.getId(), errors);
-        if (!errors.isEmpty()) {
+        if (errors.isEmpty()) {
             userConstraintValidationService.validateGeneralContracts(userDTO, userDTO.getId(), errors);
         }
     }
