@@ -43,6 +43,7 @@ public class UserDTO {
     private LocalDate dob;
 
     @Size(max = 50, message = "{ME005.5}")
+    @Pattern(regexp = Constants.GENDER_REGEX, message = Constants.GENDER_ERROR, flags = { Pattern.Flag.CASE_INSENSITIVE })
     private String gender;
 
     @NotNull(message = "{ME004}")
