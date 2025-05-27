@@ -2,6 +2,8 @@ package com.group3.eve.service;
 
 import com.group3.eve.exception.ValidationException;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import com.group3.eve.common.Constants;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 public abstract class AbstractCRUDService<T, ID, DTO>
         implements
         ICRUDService<T, ID, DTO>,
@@ -86,6 +89,10 @@ public abstract class AbstractCRUDService<T, ID, DTO>
             validateEntity(dto, errors);
 
             if (!errors.isEmpty()) {
+                for (Map.Entry<String, String> entry : errors.entrySet()) {
+                    log.error("Validation Error - Field: {}, Message: {}", entry.getKey(), entry.getValue());
+                }
+
                 throw new ValidationException(errors);
             }
 

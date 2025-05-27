@@ -21,6 +21,7 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
     private final UserRepository userRepository;
     private final EntityMapper<User, UserDTO> userDtoMapper;
     private final MessageSource messageSource;
+    private final ValidationService<UserDTO> userUniqueValidationService;
     private final ValidationService<UserDTO> userConstraintValidationService;
 
 
@@ -28,10 +29,12 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
             UserRepository userRepository,
             EntityMapper<User, UserDTO> userDtoMapper,
             MessageSource messageSource,
-            @Qualifier("userUniqueValidationService") ValidationService<UserDTO> userConstraintValidationService) {
+            @Qualifier("userUniqueValidationService") ValidationService<UserDTO> userUniqueValidationService,
+            @Qualifier("userConstraintValidationService") ValidationService<UserDTO> userConstraintValidationService) {
         this.userRepository = userRepository;
         this.userDtoMapper = userDtoMapper;
         this.messageSource = messageSource;
+        this.userUniqueValidationService = userUniqueValidationService;
         this.userConstraintValidationService = userConstraintValidationService;
     }
 
@@ -50,7 +53,14 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
      */
     @Override
     public User mapToEntity(UserDTO userDTO) {
-        return userDtoMapper.toEntity(userDTO);
+        User mappedUser = userDtoMapper.toEntity(userDTO);
+        if (userDTO.getId() != null) {
+            userRepository.findById(userDTO.getId())
+                    .ifPresent(existingUser -> {
+                        mappedUser.setCreatedAt(existingUser.getCreatedAt());
+                    });
+        }
+        return mappedUser;
     }
 
     /**
@@ -76,7 +86,10 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
     @Override
     protected void validateEntity(UserDTO userDTO, Map<String, String> errors) {
         // validate unique constraints
-        userConstraintValidationService.validateGeneralContracts(userDTO, null, errors);
+        userUniqueValidationService.validateGeneralContracts(userDTO, userDTO.getId(), errors);
+        if (errors.isEmpty()) {
+            userConstraintValidationService.validateGeneralContracts(userDTO, userDTO.getId(), errors);
+        }
     }
 
     /**
