@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.Locale;
 
 import com.group3.eve.dto.UserDTO;
+import com.group3.eve.model.User;
 import com.group3.eve.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -42,6 +41,27 @@ public class UserController {
                 true,
                 messageSource.getMessage(Constants.SUC001, null, Locale.getDefault()),
                 userPage,
+                null);
+    }
+
+    @GetMapping("{id}")
+    public CustomResponse<UserDTO> getUserById(@PathVariable Integer id) {
+        UserDTO userDto = userService.findByIdDTO(id);
+        return new CustomResponse<>(
+                true,
+                messageSource.getMessage(Constants.SUC001, null, Locale.getDefault()),
+                userDto,
+                null);
+    }
+
+    @PostMapping
+    public CustomResponse<UserDTO> createUser(@Valid @RequestBody UserDTO userDto) {
+        User createdUser = userService.save(userDto);
+        UserDTO createdUserDTO = userService.mapToDTO(createdUser);
+        return new CustomResponse<>(
+                true,
+                messageSource.getMessage(Constants.SUC002, new Object[]{createdUserDTO.getEmail()}, Locale.getDefault()),
+                createdUserDTO,
                 null);
     }
 }

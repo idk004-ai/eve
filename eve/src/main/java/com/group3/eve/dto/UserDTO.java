@@ -1,5 +1,6 @@
 package com.group3.eve.dto;
 
+import com.group3.eve.model.User;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

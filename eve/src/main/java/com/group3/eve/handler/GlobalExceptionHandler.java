@@ -32,12 +32,11 @@ public class GlobalExceptionHandler {
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorReason = error.getDefaultMessage();
-            String errorMessage = messageSource.getMessage(Constants.ME0041, new Object[]{ fieldName, errorReason }, Locale.getDefault());
-            errors.put(fieldName, errorMessage);
+            errors.put(fieldName, errorReason);
         });
         return new CustomResponse<>(
                 false,
-                "null",
+                messageSource.getMessage(Constants.ME002, new Object[] { "Validation failed" }, Locale.getDefault()),
                 null,
                 errors);
     }

@@ -10,7 +10,10 @@ public class Constants {
     public static final String ME001 = "ME001"; // Entity not found
     public static final String ME002 = "ME002"; // Entity validation error with reason
     public static final String ME003 = "ME003"; // Unable to determine entity class type
+    public static final String ME004 = "ME004"; // Invalid request format
     public static final String ME0041 = "ME004.1"; // Invalid request format with reason
+    public static final String ME019 = "ME019"; // Invalid request format with reason and field name
+    public static final String ME0191 = "ME019.1"; // Invalid request format with reason, field name, and IDs
 
     public static final String DI001 = "DI001"; // Data inconsistency error
     public static final String DI0011 = "DI0011"; // Data integrity violation error

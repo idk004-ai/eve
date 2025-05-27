@@ -5,7 +5,10 @@ import com.group3.eve.mapper.UserDtoMapper;
 import com.group3.eve.model.User;
 import com.group3.eve.repository.UserRepository;
 import com.group3.eve.service.AbstractCRUDService;
+import com.group3.eve.service.EntityMapper;
 import com.group3.eve.service.UserService;
+import com.group3.eve.service.ValidationService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -17,14 +20,20 @@ import java.util.Map;
 @Transactional
 public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO> implements UserService {
     private final UserRepository userRepository;
-    private final UserDtoMapper userDtoMapper;
+    private final EntityMapper<User, UserDTO> userDtoMapper;
     private final MessageSource messageSource;
+    private final ValidationService<UserDTO> userConstraintValidationService;
 
 
-    public UserServiceImpl(UserRepository userRepository, UserDtoMapper userDtoMapper, MessageSource messageSource) {
+    public UserServiceImpl(
+            UserRepository userRepository,
+            EntityMapper<User, UserDTO> userDtoMapper,
+            MessageSource messageSource,
+            @Qualifier("userUniqueService") ValidationService<UserDTO> userConstraintValidationService) {
         this.userRepository = userRepository;
         this.userDtoMapper = userDtoMapper;
         this.messageSource = messageSource;
+        this.userConstraintValidationService = userConstraintValidationService;
     }
 
     /**
@@ -32,8 +41,8 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
      * @return
      */
     @Override
-    protected UserDTO mapToDTO(User entity) {
-        return userDtoMapper.mapToDTO(entity);
+    public UserDTO mapToDTO(User entity) {
+        return userDtoMapper.toDto(entity);
     }
 
     /**
@@ -41,8 +50,8 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
      * @return
      */
     @Override
-    protected User mapToEntity(UserDTO userDTO) {
-        return userDtoMapper.mapToEntity(userDTO);
+    public User mapToEntity(UserDTO userDTO) {
+        return userDtoMapper.toEntity(userDTO);
     }
 
     /**
@@ -67,6 +76,7 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
      */
     @Override
     protected void validateEntity(UserDTO userDTO, Map<String, String> errors) {
+        // validate unique constraints
 
     }
 

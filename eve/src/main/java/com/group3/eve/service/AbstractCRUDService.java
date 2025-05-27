@@ -21,10 +21,6 @@ public abstract class AbstractCRUDService<T, ID, DTO>
         IMessageSourceService,
         IEntityTypeResolver<T> {
 
-    protected abstract DTO mapToDTO(T entity);
-
-    protected abstract T mapToEntity(DTO dto);
-
     protected abstract void markEntityAsDeleted(T entity);
 
     protected abstract void markEntityAsDisabled(T entity);
