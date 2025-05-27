@@ -48,14 +48,14 @@ public abstract class AbstractUniqueValidationService<T, ID>
             if (id == null) {
                 // Creating new entity - any existing entity is a violation
                 String errorMessage = getMessageSource().getMessage(
-                        "Constants.ME019",
+                        Constants.ME019,
                         new Object[] { fieldName, fieldValue },
                         Locale.getDefault());
                 errors.put(fieldName, errorMessage);
             } else if (!existingId.equals(id)) {
                 // Updating entity - violation only if different entity has same value
                 String errorMessage = getMessageSource().getMessage(
-                        "Constants.ME0191",
+                        Constants.ME0191,
                         new Object[] { fieldName, fieldValue, id, existingId },
                         Locale.getDefault());
                 errors.put(fieldName, errorMessage);

@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
         });
         return new CustomResponse<>(
                 false,
-                messageSource.getMessage(Constants.ME002, new Object[] { "Validation failed" }, Locale.getDefault()),
+                "null",
                 null,
                 errors);
     }

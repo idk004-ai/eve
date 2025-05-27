@@ -6,6 +6,13 @@ package com.group3.eve.common;
  * the message source.
  */
 public class Constants {
+    public static final String FIELD_FULL_NAME = "fullName";
+    public static final String FIELD_EMAIL = "email";
+    public static final String FIELD_USERNAME = "username";
+    public static final String FIELD_PHONE = "phone";
+
+
+
     // Error message codes
     public static final String ME001 = "ME001"; // Entity not found
     public static final String ME002 = "ME002"; // Entity validation error with reason

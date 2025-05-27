@@ -50,8 +50,8 @@ public class User {
     @Column(name = "IsActive")
     private Boolean isActive;
 
-    @Size(max = 50)
-    @Column(name = "Role", length = 50)
+    @Lob
+    @Column(name = "Role")
     private String role;
 
     @ColumnDefault("CURRENT_TIMESTAMP")

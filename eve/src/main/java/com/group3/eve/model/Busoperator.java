@@ -18,6 +18,10 @@ public class Busoperator {
     @Column(name = "OperatorId", nullable = false)
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "UserId")
+    private User user;
+
     @Size(max = 255)
     @Column(name = "Name")
     private String name;

@@ -1,13 +1,17 @@
 package com.group3.eve.service.impl;
 
+import com.group3.eve.common.Constants;
 import com.group3.eve.dto.UserDTO;
 import com.group3.eve.model.User;
 import com.group3.eve.repository.UserRepository;
 import com.group3.eve.service.AbstractUniqueValidationService;
+
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+@Service
 public class UserUniqueValidationService extends AbstractUniqueValidationService<UserDTO, Integer> {
     private final MessageSource messageSource;
     private final UserRepository userRepository;
@@ -48,7 +52,7 @@ public class UserUniqueValidationService extends AbstractUniqueValidationService
             validateUniqueField(
                 id, 
                 errors, 
-                null, 
+                Constants.FIELD_EMAIL, 
                 entity.getEmail(), 
                 userRepository::findByEmail, 
                 User::getId);
@@ -58,7 +62,7 @@ public class UserUniqueValidationService extends AbstractUniqueValidationService
             validateUniqueField(
                 id, 
                 errors, 
-                null, 
+                Constants.FIELD_USERNAME, 
                 entity.getUsername(), 
                 userRepository::findByUsername, 
                 User::getId);
@@ -68,7 +72,7 @@ public class UserUniqueValidationService extends AbstractUniqueValidationService
             validateUniqueField(
                 id, 
                 errors, 
-                null, 
+                Constants.FIELD_PHONE, 
                 entity.getPhone(), 
                 userRepository::findByPhone, 
                 User::getId);

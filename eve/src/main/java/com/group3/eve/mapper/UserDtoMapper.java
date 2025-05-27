@@ -45,6 +45,7 @@ public class UserDtoMapper implements EntityMapper<User, UserDTO> {
         user.setFullName(userDTO.getFullName());
         user.setEmail(userDTO.getEmail());
         user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
         user.setPhone(userDTO.getPhone());
         user.setDob(userDTO.getDob());
         user.setGender(userDTO.getGender());

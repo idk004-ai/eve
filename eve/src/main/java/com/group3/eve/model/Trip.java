@@ -41,8 +41,9 @@ public class Trip {
     @Column(name = "MinPassengers")
     private Integer minPassengers;
 
-    @Size(max = 20)
-    @Column(name = "Status", length = 20)
+    @ColumnDefault("'scheduled'")
+    @Size(max = 50)
+    @Column(name = "Status", length = 50)
     private String status;
 
     @Lob

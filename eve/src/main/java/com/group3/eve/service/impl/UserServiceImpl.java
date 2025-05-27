@@ -1,7 +1,6 @@
 package com.group3.eve.service.impl;
 
 import com.group3.eve.dto.UserDTO;
-import com.group3.eve.mapper.UserDtoMapper;
 import com.group3.eve.model.User;
 import com.group3.eve.repository.UserRepository;
 import com.group3.eve.service.AbstractCRUDService;
@@ -29,7 +28,7 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
             UserRepository userRepository,
             EntityMapper<User, UserDTO> userDtoMapper,
             MessageSource messageSource,
-            @Qualifier("userUniqueService") ValidationService<UserDTO> userConstraintValidationService) {
+            @Qualifier("userUniqueValidationService") ValidationService<UserDTO> userConstraintValidationService) {
         this.userRepository = userRepository;
         this.userDtoMapper = userDtoMapper;
         this.messageSource = messageSource;
@@ -77,7 +76,7 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
     @Override
     protected void validateEntity(UserDTO userDTO, Map<String, String> errors) {
         // validate unique constraints
-
+        userConstraintValidationService.validateGeneralContracts(userDTO, null, errors);
     }
 
     /**

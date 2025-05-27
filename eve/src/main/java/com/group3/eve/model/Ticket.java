@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 
 @Getter
@@ -46,9 +45,6 @@ public class Ticket {
     @Size(max = 50)
     @Column(name = "PassengerPhone", length = 50)
     private String passengerPhone;
-
-//    @Column(name = "Price", precision = 10, scale = 2)
-//    private BigDecimal price;
 
     @Size(max = 100)
     @Column(name = "TicketCode", length = 100)
