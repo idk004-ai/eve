@@ -42,6 +42,7 @@ public class User {
     @Column(name = "DOB")
     private LocalDate dob;
 
+    @ColumnDefault("'male'")
     @Size(max = 50)
     @Column(name = "Gender", length = 50)
     private String gender;
@@ -50,8 +51,9 @@ public class User {
     @Column(name = "IsActive")
     private Boolean isActive;
 
-    @Lob
-    @Column(name = "Role")
+    @ColumnDefault("'customer'")
+    @Size(max = 50)
+    @Column(name = "Role", length = 50)
     private String role;
 
     @ColumnDefault("CURRENT_TIMESTAMP")

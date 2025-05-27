@@ -49,4 +49,6 @@ public class Constants {
     public static final String PHONE_ERROR = "Phone number must be between 10 and 15 digits";
     public static final String ROLE_REGEX = "^(customer|bus_operator|admin)$";
     public static final String ROLE_ERROR = "Role must be one of the following: customer, bus_operator, admin";
+    public static final String GENDER_REGEX = "^(male|female|other)$";
+    public static final String GENDER_ERROR = "Gender must be one of the following: male, female, other";
 }

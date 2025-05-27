@@ -64,4 +64,16 @@ public class UserController {
                 createdUserDTO,
                 null);
     }
+
+    @PatchMapping("{id}")
+    public CustomResponse<UserDTO> updateUser(@PathVariable Integer id, @Valid @RequestBody UserDTO userDto) {
+        userDto.setId(id); // Ensure the ID is set for the update operation
+        User updatedUser = userService.save(userDto);
+        UserDTO updatedUserDTO = userService.mapToDTO(updatedUser);
+        return new CustomResponse<>(
+                true,
+                messageSource.getMessage(Constants.SUC003, new Object[]{updatedUserDTO.getEmail()}, Locale.getDefault()),
+                updatedUserDTO,
+                null);
+    }
 }
