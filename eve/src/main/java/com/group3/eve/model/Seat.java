@@ -8,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Getter
@@ -32,6 +33,9 @@ public class Seat {
     @ColumnDefault("1")
     @Column(name = "SeatFloor")
     private Integer seatFloor;
+
+    @Column(name = "BasePrice", precision = 10, scale = 2)
+    private BigDecimal basePrice;
 
     @ColumnDefault("1")
     @Column(name = "IsActive")

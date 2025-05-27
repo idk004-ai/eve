@@ -52,8 +52,11 @@ public interface ICRUDService<T, ID, DTO> {
     /**
      * Checks if an entity is active.
      *
-     * @param entity the entity to check
      * @return true if the entity is active, false otherwise
      */
     long countAll();
+
+    DTO mapToDTO(T entity);
+
+    T mapToEntity(DTO dto);
 }

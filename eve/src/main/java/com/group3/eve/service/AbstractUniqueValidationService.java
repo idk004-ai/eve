@@ -8,28 +8,76 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
-import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
 public abstract class AbstractUniqueValidationService<T, ID>
-        implements
-        ValidationService<T>,
-        IMessageSourceService,
-        IRepositoryService<T, ID>,
-        IEntityTypeResolver<T> {
+        implements ValidationService<T>, IMessageSourceService, IEntityTypeResolver<T> {
 
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * NEW APPROACH: Validate unique field with custom finder function.
+     * This is the RECOMMENDED way - more flexible and testable.
+     * 
+     * @param id          the entity ID (null for creation, non-null for update)
+     * @param errors      map to collect validation errors
+     * @param fieldName   name of the field being validated
+     * @param fieldValue  value of the field
+     * @param finder      function to find existing entity by field value
+     * @param idExtractor function to extract ID from found entity
+     */
+    protected <E> void validateUniqueField(
+            ID id,
+            Map<String, String> errors,
+            String fieldName,
+            String fieldValue,
+            Function<String, Optional<E>> finder,
+            Function<E, ID> idExtractor) {
+
+        if (errors.containsKey(fieldName) || fieldValue == null || fieldValue.trim().isEmpty()) {
+            return;
+        }
+
+        finder.apply(fieldValue).ifPresent(existingEntity -> {
+            ID existingId = idExtractor.apply(existingEntity);
+
+            if (id == null) {
+                // Creating new entity - any existing entity is a violation
+                String errorMessage = getMessageSource().getMessage(
+                        Constants.ME019,
+                        new Object[] { fieldName, fieldValue },
+                        Locale.getDefault());
+                errors.put(fieldName, errorMessage);
+            } else if (!existingId.equals(id)) {
+                // Updating entity - violation only if different entity has same value
+                String errorMessage = getMessageSource().getMessage(
+                        Constants.ME0191,
+                        new Object[] { fieldName, fieldValue, id, existingId },
+                        Locale.getDefault());
+                errors.put(fieldName, errorMessage);
+            }
+        });
+    }
+
+    /**
+     * LEGACY APPROACH: Generic validation with dynamic field finding.
+     * Keep this for backward compatibility and cases where specific finders aren't
+     * available.
+     * 
+     * @deprecated Use validateUniqueField with custom finder instead
+     */
+    @Deprecated
     protected void validateUnique(
             ID id,
             Map<String, String> errors,
             String fieldName,
             String fieldValue,
             Function<T, ID> idExtractor) {
+
         if (errors.containsKey(fieldName) || fieldValue == null) {
             return;
         }
@@ -47,19 +95,12 @@ public abstract class AbstractUniqueValidationService<T, ID>
         });
     }
 
+    /**
+     * Generic field finder using criteria queries.
+     * This is a fallback when specific repository methods aren't available.
+     */
     protected Optional<T> findByFieldDynamic(String fieldName, Object fieldValue) {
         try {
-            // First try using a specific repository method if available
-            String methodName = "findBy" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-            Method method = findRepositoryMethod(methodName, fieldValue.getClass());
-
-            if (method != null) {
-                @SuppressWarnings("unchecked")
-                Optional<T> result = (Optional<T>) method.invoke(getRepository(), fieldValue);
-                return result;
-            }
-
-            // Fall back to criteria query - much more efficient than findAll()
             Class<T> entityClass = getEntityClass();
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
             CriteriaQuery<T> query = cb.createQuery(entityClass);
@@ -79,12 +120,35 @@ public abstract class AbstractUniqueValidationService<T, ID>
         }
     }
 
-    private Method findRepositoryMethod(String methodName, Class<?>... parameterTypes) {
-        try {
-            return getRepository().getClass().getMethod(methodName, parameterTypes);
-        } catch (NoSuchMethodException e) {
-            return null;
+    /**
+     * Convenience method for validating multiple unique fields at once.
+     */
+    @SuppressWarnings("unchecked")
+    protected void validateUniqueFields(ID id, Map<String, String> errors, UniqueFieldValidator<ID>... validators) {
+        for (UniqueFieldValidator<ID> validator : validators) {
+            validator.validate(id, errors, this::validateUniqueField);
         }
     }
 
+    /**
+     * Functional interface for batch unique field validation.
+     */
+    @FunctionalInterface
+    public interface UniqueFieldValidator<ID> {
+        void validate(ID id, Map<String, String> errors, UniqueFieldValidationFunction<ID> validationFunction);
+    }
+
+    /**
+     * Functional interface for the validation function signature.
+     */
+    @FunctionalInterface
+    public interface UniqueFieldValidationFunction<ID> {
+        <E> void validateUniqueField(
+                ID id,
+                Map<String, String> errors,
+                String fieldName,
+                String fieldValue,
+                Function<String, Optional<E>> finder,
+                Function<E, ID> idExtractor);
+    }
 }
