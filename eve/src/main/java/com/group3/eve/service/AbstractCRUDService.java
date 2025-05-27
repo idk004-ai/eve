@@ -86,6 +86,10 @@ public abstract class AbstractCRUDService<T, ID, DTO>
             validateEntity(dto, errors);
 
             if (!errors.isEmpty()) {
+                for (Map.Entry<String, String> entry : errors.entrySet()) {
+                    System.out.println("Validation Error - Field: " + entry.getKey() + ", Message: " + entry.getValue());
+                }
+
                 throw new ValidationException(errors);
             }
 

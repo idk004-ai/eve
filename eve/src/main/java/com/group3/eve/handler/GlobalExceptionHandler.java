@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
     public CustomResponse<Map<String, String>> handleValidationException(ValidationException ex) {
         return new CustomResponse<>(
                 false,
-                messageSource.getMessage(Constants.ME002, new Object[] { ex.getMessage() }, Locale.getDefault()),
+                messageSource.getMessage(ex.getMessage(), null, Locale.getDefault()),
                 null,
                 new HashMap<>(ex.getErrors()));
     }
@@ -72,13 +72,13 @@ public class GlobalExceptionHandler {
                 null);
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public CustomResponse<String> handleGeneralException(Exception ex) {
-        return new CustomResponse<>(
-                false,
-                messageSource.getMessage(Constants.ME002, new Object[] { ex.getMessage() }, Locale.getDefault()),
-                null,
-                null);
-    }
+    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    // @ExceptionHandler(Exception.class)
+    // public CustomResponse<String> handleGeneralException(Exception ex) {
+    //     return new CustomResponse<>(
+    //             false,
+    //             messageSource.getMessage(Constants.ME002, new Object[] { ex.getMessage() }, Locale.getDefault()),
+    //             null,
+    //             null);
+    // }
 }

@@ -27,8 +27,8 @@ public class UserDtoMapper implements EntityMapper<User, UserDTO> {
         responseDTO.setGender(user.getGender());
         responseDTO.setIsActive(user.getIsActive());
         responseDTO.setRole(user.getRole());
-        responseDTO.setCreatedAt(user.getCreatedAt() != null ?
-                user.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalDate() : null);
+        responseDTO.setCreatedAt(
+                user.getCreatedAt() != null ? user.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalDate() : null);
         responseDTO.setModifiedAt(user.getModifiedAt());
 
         return responseDTO;
@@ -53,8 +53,6 @@ public class UserDtoMapper implements EntityMapper<User, UserDTO> {
         user.setRole(userDTO.getRole());
         if (userDTO.getId() == null) {
             user.setCreatedAt(Instant.now());
-        } else {
-            user.setCreatedAt(Instant.from(userDTO.getCreatedAt()));
         }
         user.setModifiedAt(Instant.now());
 
