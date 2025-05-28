@@ -122,6 +122,7 @@ public abstract class AbstractCRUDService<T, ID, DTO>
             throw new EntityNotFoundException(errorMessage);
         }
         markEntityAsDeleted(entity);
+        markEntityAsDisabled(entity);
         getRepository().save(entity);
     }
 

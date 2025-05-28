@@ -76,4 +76,15 @@ public class UserController {
                 updatedUserDTO,
                 null);
     }
+
+    @DeleteMapping("{id}")
+    public CustomResponse<Void> deleteUser(@PathVariable Integer id) {
+        User user = userService.findByIdEntity(id);
+        userService.deleteById(id);
+        return new CustomResponse<>(
+                true,
+                messageSource.getMessage(Constants.SUC004, new Object[] { user.getEmail() }, Locale.getDefault()),
+                null,
+                null);
+    }
 }
