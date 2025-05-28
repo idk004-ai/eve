@@ -20,7 +20,6 @@ import java.util.Map;
 @Transactional
 public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO> implements UserService {
     private final UserRepository userRepository;
-    //    private final EntityMapper<User, UserDTO> userDtoMapper;
     private final MessageSource messageSource;
     private final ValidationService<UserDTO> userUniqueValidationService;
     private final ValidationService<UserDTO> userConstraintValidationService;
@@ -28,12 +27,10 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
 
     public UserServiceImpl(
             UserRepository userRepository,
-//            EntityMapper<User, UserDTO> userDtoMapper,
             MessageSource messageSource,
             @Qualifier("userUniqueValidationService") ValidationService<UserDTO> userUniqueValidationService,
             @Qualifier("userConstraintValidationService") ValidationService<UserDTO> userConstraintValidationService) {
         this.userRepository = userRepository;
-//        this.userDtoMapper = userDtoMapper;
         this.messageSource = messageSource;
         this.userUniqueValidationService = userUniqueValidationService;
         this.userConstraintValidationService = userConstraintValidationService;

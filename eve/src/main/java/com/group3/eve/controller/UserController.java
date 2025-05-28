@@ -14,6 +14,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -78,13 +79,8 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
-    public CustomResponse<Void> deleteUser(@PathVariable Integer id) {
-        User user = userService.findByIdEntity(id);
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         userService.deleteById(id);
-        return new CustomResponse<>(
-                true,
-                messageSource.getMessage(Constants.SUC004, new Object[] { user.getEmail() }, Locale.getDefault()),
-                null,
-                null);
+        return ResponseEntity.noContent().build();
     }
 }
