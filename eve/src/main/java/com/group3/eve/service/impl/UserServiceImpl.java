@@ -13,13 +13,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneId;
 import java.util.Map;
 
 @Service
 @Transactional
 public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO> implements UserService {
     private final UserRepository userRepository;
-    private final EntityMapper<User, UserDTO> userDtoMapper;
     private final MessageSource messageSource;
     private final ValidationService<UserDTO> userUniqueValidationService;
     private final ValidationService<UserDTO> userConstraintValidationService;
@@ -27,12 +27,10 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
 
     public UserServiceImpl(
             UserRepository userRepository,
-            EntityMapper<User, UserDTO> userDtoMapper,
             MessageSource messageSource,
             @Qualifier("userUniqueValidationService") ValidationService<UserDTO> userUniqueValidationService,
             @Qualifier("userConstraintValidationService") ValidationService<UserDTO> userConstraintValidationService) {
         this.userRepository = userRepository;
-        this.userDtoMapper = userDtoMapper;
         this.messageSource = messageSource;
         this.userUniqueValidationService = userUniqueValidationService;
         this.userConstraintValidationService = userConstraintValidationService;
@@ -44,7 +42,22 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
      */
     @Override
     public UserDTO mapToDTO(User entity) {
-        return userDtoMapper.toDto(entity);
+        if (entity == null) return new UserDTO();
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(entity.getId());
+        userDTO.setFullName(entity.getFullName());
+        userDTO.setEmail(entity.getEmail());
+        userDTO.setUsername(entity.getUsername());
+        userDTO.setPhone(entity.getPhone());
+        userDTO.setDob(entity.getDob());
+        userDTO.setGender(entity.getGender());
+        userDTO.setIsActive(entity.getIsActive());
+        userDTO.setRole(entity.getRole());
+        userDTO.setCreatedAt(
+                entity.getCreatedAt() != null ? entity.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalDate() : null);
+        userDTO.setModifiedAt(entity.getModifiedAt());
+        return userDTO;
     }
 
     /**
@@ -53,14 +66,29 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
      */
     @Override
     public User mapToEntity(UserDTO userDTO) {
-        User mappedUser = userDtoMapper.toEntity(userDTO);
-        if (userDTO.getId() != null) {
+        if (userDTO == null) return new User();
+
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setFullName(userDTO.getFullName());
+        user.setEmail(userDTO.getEmail());
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setPhone(userDTO.getPhone());
+        user.setDob(userDTO.getDob());
+        user.setGender(userDTO.getGender());
+        user.setIsActive(userDTO.getIsActive());
+        user.setRole(userDTO.getRole());
+        if (userDTO.getId() == null) {
+            user.setCreatedAt(java.time.Instant.now());
+        } else {
             userRepository.findById(userDTO.getId())
                     .ifPresent(existingUser -> {
-                        mappedUser.setCreatedAt(existingUser.getCreatedAt());
+                        user.setCreatedAt(existingUser.getCreatedAt());
                     });
         }
-        return mappedUser;
+        user.setModifiedAt(java.time.Instant.now());
+        return user;
     }
 
     /**
