@@ -42,6 +42,10 @@ public class Bus {
     @Column(name = "SeatMapData")
     private String seatMapData;
 
+    @Lob
+    @Column(name = "Description")
+    private String description;
+
     @ColumnDefault("1")
     @Column(name = "IsActive")
     private Boolean isActive;
