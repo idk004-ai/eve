@@ -52,6 +52,9 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
         userDTO.setPhone(entity.getPhone());
         userDTO.setDob(entity.getDob());
         userDTO.setGender(entity.getGender());
+        userDTO.setAddress(entity.getAddress());
+        userDTO.setLogoUrl(entity.getLogoUrl()); // bus operator
+        userDTO.setLicense(entity.getLicense()); // bus operator
         userDTO.setIsActive(entity.getIsActive());
         userDTO.setRole(entity.getRole());
         userDTO.setCreatedAt(
@@ -77,6 +80,9 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
         user.setPhone(userDTO.getPhone());
         user.setDob(userDTO.getDob());
         user.setGender(userDTO.getGender());
+        user.setAddress(userDTO.getAddress());
+        user.setLogoUrl(userDTO.getLogoUrl()); // bus operator
+        user.setLicense(userDTO.getLicense()); // bus operator
         user.setIsActive(userDTO.getIsActive());
         user.setRole(userDTO.getRole());
         if (userDTO.getId() == null) {

@@ -13,7 +13,10 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "routestops")
+@Table(name = "routestops", indexes = {
+        @Index(name = "RouteId", columnList = "RouteId"),
+        @Index(name = "LocationId", columnList = "LocationId")
+})
 public class Routestop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

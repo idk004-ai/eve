@@ -12,7 +12,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "buses")
+@Table(name = "buses", indexes = {
+        @Index(name = "OperatorUserId", columnList = "OperatorUserId")
+}, uniqueConstraints = {
+        @UniqueConstraint(name = "LicensePlate", columnNames = {"LicensePlate"})
+})
 public class Bus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +24,8 @@ public class Bus {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "OperatorId")
-    private Busoperator operator;
+    @JoinColumn(name = "OperatorUserId")
+    private User operatorUser;
 
     @Size(max = 50)
     @Column(name = "LicensePlate", length = 50)

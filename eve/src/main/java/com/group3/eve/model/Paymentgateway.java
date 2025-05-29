@@ -11,7 +11,9 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "paymentgateway")
+@Table(name = "paymentgateway", uniqueConstraints = {
+        @UniqueConstraint(name = "Code", columnNames = {"Code"})
+})
 public class Paymentgateway {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

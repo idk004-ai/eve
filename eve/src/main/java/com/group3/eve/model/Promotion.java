@@ -12,7 +12,9 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "promotions")
+@Table(name = "promotions", uniqueConstraints = {
+        @UniqueConstraint(name = "Code", columnNames = {"Code"})
+})
 public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

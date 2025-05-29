@@ -1,6 +1,7 @@
 package com.group3.eve.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,12 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "payment")
+@Table(name = "payment", indexes = {
+        @Index(name = "TicketId", columnList = "TicketId"),
+        @Index(name = "GatewayId", columnList = "GatewayId")
+}, uniqueConstraints = {
+        @UniqueConstraint(name = "TransactionCode", columnNames = {"TransactionCode"})
+})
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,16 +33,20 @@ public class Payment {
     @JoinColumn(name = "GatewayId")
     private Paymentgateway gateway;
 
-    @Column(name = "Amount", precision = 10, scale = 2)
+    @NotNull
+    @Column(name = "Amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
     @Size(max = 255)
-    @Column(name = "TransactionCode")
+    @NotNull
+    @Column(name = "TransactionCode", nullable = false)
     private String transactionCode;
 
-    @Column(name = "PaymentTime")
+    @NotNull
+    @Column(name = "PaymentTime", nullable = false)
     private Instant paymentTime;
 
+    @ColumnDefault("'pending'")
     @Size(max = 50)
     @Column(name = "Status", length = 50)
     private String status;

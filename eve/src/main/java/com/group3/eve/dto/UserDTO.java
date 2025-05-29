@@ -54,6 +54,10 @@ public class UserDTO {
     @Size(max = 50, message = "{ME005.5}")
     private String role;
 
+    private String address;
+    private String logoUrl;
+    private String license;
+
     private LocalDate createdAt;
     private Instant modifiedAt;
 
