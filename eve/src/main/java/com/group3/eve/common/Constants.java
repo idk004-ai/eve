@@ -14,6 +14,13 @@ public class Constants {
     public static final String FIELD_PASSWORD = "password";
     public static final String FIELD_ROLE = "role";
     public static final String FIELD_DOB = "dob";
+    public static final String FIELD_LOGO_URL = "logoUrl";
+    public static final String FIELD_LICENSE = "license";
+
+    // user roles
+    public static final String ROLE_CUSTOMER = "customer";
+    public static final String ROLE_BUS_OPERATOR = "bus_operator";
+    public static final String ROLE_ADMIN = "admin";
 
 
     // Error message codes
@@ -58,6 +65,10 @@ public class Constants {
     public static final String ROLE_ERROR = "Role must be one of the following: customer, bus_operator, admin";
     public static final String GENDER_REGEX = "^(male|female|other)$";
     public static final String GENDER_ERROR = "Gender must be one of the following: male, female, other";
+
+    // Business rule validation message codes
+    public static final String ME0073 = "ME007.3"; // Logo URL is required for bus operators
+    public static final String ME0074 = "ME007.4"; // License is required for bus operators
 
     public static final String ID_NOT_EXIST = " ID does not exist";
     public static final String RECORD_NOT_FOUND = " record not found";
