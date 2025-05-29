@@ -11,7 +11,10 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "ticketpromotions")
+@Table(name = "ticketpromotions", indexes = {
+        @Index(name = "TicketId", columnList = "TicketId"),
+        @Index(name = "PromotionId", columnList = "PromotionId")
+})
 public class Ticketpromotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

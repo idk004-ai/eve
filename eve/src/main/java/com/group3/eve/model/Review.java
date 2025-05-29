@@ -10,7 +10,11 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "reviews")
+@Table(name = "reviews", indexes = {
+        @Index(name = "UserId", columnList = "UserId"),
+        @Index(name = "TripId", columnList = "TripId"),
+        @Index(name = "OperatorUserId", columnList = "OperatorUserId")
+})
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +30,8 @@ public class Review {
     private Trip trip;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "OperatorId")
-    private Busoperator operator;
+    @JoinColumn(name = "OperatorUserId")
+    private User operatorUser;
 
     @Column(name = "Rating")
     private Integer rating;

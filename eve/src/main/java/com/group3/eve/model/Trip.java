@@ -1,6 +1,7 @@
 package com.group3.eve.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,10 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "trip")
+@Table(name = "trip", indexes = {
+        @Index(name = "RouteId", columnList = "RouteId"),
+        @Index(name = "BusId", columnList = "BusId")
+})
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +30,12 @@ public class Trip {
     @JoinColumn(name = "BusId")
     private Bus bus;
 
-    @Column(name = "DepartureTime")
+    @NotNull
+    @Column(name = "DepartureTime", nullable = false)
     private Instant departureTime;
 
-    @Column(name = "ArrivalTime")
+    @NotNull
+    @Column(name = "ArrivalTime", nullable = false)
     private Instant arrivalTime;
 
     @Column(name = "AvailableSeats")
