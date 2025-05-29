@@ -42,8 +42,31 @@ public class UserConstraintValidationService extends AbstractConstraintValidatio
                     return messageSource.getMessage(
                             Constants.ME0072,
                             new Object[] { 18 },
-                            Locale.getDefault());
-                });
+                            Locale.getDefault());                
+            }
+        );
+    }
+
+    private void validateBusOperatorRequiredFields(UserDTO dto, Map<String, String> errors) {
+        if (Constants.ROLE_BUS_OPERATOR.equals(dto.getRole())) {
+            // Validate logoUrl is required for bus operators
+            if (dto.getLogoUrl() == null || dto.getLogoUrl().trim().isEmpty()) {
+                errors.put(Constants.FIELD_LOGO_URL, 
+                    messageSource.getMessage(
+                        Constants.ME0073, 
+                        new Object[]{}, 
+                        Locale.getDefault()));
+            }
+            
+            // Validate license is required for bus operators
+            if (dto.getLicense() == null || dto.getLicense().trim().isEmpty()) {
+                errors.put(Constants.FIELD_LICENSE, 
+                    messageSource.getMessage(
+                        Constants.ME0074, 
+                        new Object[]{}, 
+                        Locale.getDefault()));
+            }
+        }
     }
 
     @Override
@@ -54,11 +77,12 @@ public class UserConstraintValidationService extends AbstractConstraintValidatio
         if (id != null) {
             validateEntityReference(id, Constants.FIELD_ID, errors, userRepository::findById, null, User::getIsActive,
                     null);
-        }
-
-        if (dto.getDob() != null) {
+        }        if (dto.getDob() != null) {
             validateAge(dto.getDob(), Constants.FIELD_DOB, errors);
         }
+
+        // Validate business rules for bus operators
+        validateBusOperatorRequiredFields(dto, errors);
     }
 
     @Override
