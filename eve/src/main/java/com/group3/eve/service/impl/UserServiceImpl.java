@@ -59,7 +59,8 @@ public class UserServiceImpl extends AbstractCRUDService<User, Integer, UserDTO>
         userDTO.setRole(entity.getRole());
         userDTO.setCreatedAt(
                 entity.getCreatedAt() != null ? entity.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalDate() : null);
-        userDTO.setModifiedAt(entity.getModifiedAt());
+        userDTO.setModifiedAt(
+                entity.getModifiedAt() != null ? entity.getModifiedAt().atZone(ZoneId.systemDefault()).toLocalDate() : null);
         return userDTO;
     }
 

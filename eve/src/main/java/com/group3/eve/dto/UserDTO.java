@@ -59,6 +59,6 @@ public class UserDTO {
     private String license;
 
     private LocalDate createdAt;
-    private Instant modifiedAt;
+    private LocalDate modifiedAt;
 
 }

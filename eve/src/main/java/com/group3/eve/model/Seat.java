@@ -43,6 +43,10 @@ public class Seat {
     @Column(name = "IsActive")
     private Boolean isActive;
 
+    @ColumnDefault("0")
+    @Column(name = "IsBooked")
+    private Boolean isBooked;
+
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "CreatedAt")
     private Instant createdAt;
