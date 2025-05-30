@@ -4,13 +4,16 @@ import com.group3.eve.dto.BusDTO;
 import com.group3.eve.dto.SeatDTO;
 import com.group3.eve.model.Bus;
 import com.group3.eve.model.Seat;
+import com.group3.eve.model.User;
 import com.group3.eve.repository.BusRepository;
 import com.group3.eve.repository.SeatRepository;
 import com.group3.eve.repository.UserRepository;
 import com.group3.eve.service.AbstractCRUDService;
 import com.group3.eve.service.BusService;
 import com.group3.eve.service.SeatService;
+import com.group3.eve.service.UserService;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +26,18 @@ public class BusServiceImpl extends AbstractCRUDService<Bus, Integer, BusDTO> im
     private final BusRepository busRepository;
     private final MessageSource messageSource;
     private final SeatService seatService;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
 
-    public BusServiceImpl(BusRepository busRepository, MessageSource messageSource, SeatService seatService, UserRepository userRepository) {
+    public BusServiceImpl(
+            BusRepository busRepository,
+            MessageSource messageSource,
+            SeatService seatService,
+            @Lazy UserService userService) {
         this.busRepository = busRepository;
         this.messageSource = messageSource;
         this.seatService = seatService;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
 
@@ -100,8 +107,8 @@ public class BusServiceImpl extends AbstractCRUDService<Bus, Integer, BusDTO> im
         Bus bus = new Bus();
         bus.setId(busDTO.getId());
         if (busDTO.getOperatorUserId() != null) {
-            userRepository.findById(busDTO.getOperatorUserId())
-                    .ifPresent(bus::setOperatorUser);
+            User user = userService.findByIdEntity(busDTO.getOperatorUserId());
+            bus.setOperatorUser(user);
         }
 
         bus.setLicensePlate(busDTO.getLicensePlate());

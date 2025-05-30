@@ -1,12 +1,15 @@
 package com.group3.eve.service.impl;
 
 import com.group3.eve.dto.SeatDTO;
+import com.group3.eve.model.Bus;
 import com.group3.eve.model.Seat;
 import com.group3.eve.repository.BusRepository;
 import com.group3.eve.repository.SeatRepository;
 import com.group3.eve.service.AbstractCRUDService;
+import com.group3.eve.service.BusService;
 import com.group3.eve.service.SeatService;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +23,15 @@ import java.util.stream.Collectors;
 public class SeatServiceImpl extends AbstractCRUDService<Seat, Integer, SeatDTO> implements SeatService {
     private final SeatRepository seatRepository;
     private final MessageSource messageSource;
-    private final BusRepository busRepository;
+    private final BusService busService;
 
-    public SeatServiceImpl(SeatRepository seatRepository, MessageSource messageSource, BusRepository busRepository) {
+    public SeatServiceImpl(
+            SeatRepository seatRepository,
+            MessageSource messageSource,
+            @Lazy BusService busService) {
         this.seatRepository = seatRepository;
         this.messageSource = messageSource;
-        this.busRepository = busRepository;
+        this.busService = busService;
     }
 
 
@@ -89,8 +95,8 @@ public class SeatServiceImpl extends AbstractCRUDService<Seat, Integer, SeatDTO>
         Seat seat = new Seat();
         seat.setId(seatDTO.getId());
         if (seatDTO.getBusId() != null) {
-            busRepository.findById(seatDTO.getBusId())
-                    .ifPresent(seat::setBus);
+            Bus bus = busService.findByIdEntity(seatDTO.getBusId());
+            seat.setBus(bus);
         }
         seat.setSeatNumber(seatDTO.getSeatNumber());
         seat.setSeatFloor(seatDTO.getSeatFloor());
