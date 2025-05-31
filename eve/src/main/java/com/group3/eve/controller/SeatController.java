@@ -24,9 +24,9 @@ public class SeatController {
         this.messageSource = messageSource;
     }
 
-    @GetMapping("/bus/{id}")
-    public CustomResponse<List<SeatDTO>> getSeatByBusId(@PathVariable int id) {
-        List<SeatDTO> seatDTO = seatService.findSeatsByBusId(id);
+    @GetMapping("/bus/{busId}")
+    public CustomResponse<List<SeatDTO>> getSeatByBusId(@PathVariable int busId) {
+        List<SeatDTO> seatDTO = seatService.findSeatsByBusId(busId);
         return new CustomResponse<>(
                 true,
                 messageSource.getMessage(Constants.SUC001, null, Locale.getDefault()),
